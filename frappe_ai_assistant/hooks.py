@@ -20,7 +20,14 @@ app_license = "mit"
 # 		"has_permission": "frappe_ai_assistant.api.permission.has_app_permission",
 # 	}
 # ]
+app_include_js = [
+    # Chikku AI floating launcher (tiny; the chat panel bundle is lazy-loaded on first open).
+    "frappe_ai_assistant.bundle.js",
+]
+app_include_css = ["frappe_ai_assistant.bundle.css"]
 
+# Chikku AI: launcher config for permitted users (no secrets).
+extend_bootinfo = ["frappe_ai_assistant.frappe_ai_assistant.boot.extend_bootinfo"]
 # The dock, the rail down the left of the desk, is a document rather than a hook. Author it in
 # Manage Dock on a developer-mode site and press Export to App, and it is written to
 # `frappe_ai_assistant/dock/frappe_ai_assistant/frappe_ai_assistant.json` for git to carry. An app that ships none has no
@@ -29,13 +36,53 @@ app_license = "mit"
 # A companion app, one that extends a host app rather than standing on its own, says so with
 # `mount_on` on that same record, and its entries are appended to the host's rail. Mounting keeps
 # the companion off the apps screen, so it takes precedence over any add_to_apps_screen above.
-
+doc_events = {
+    # Chikku AI: imports started from Chikku can never be switched to "submit after import".
+    "Data Import": {
+        "validate": "frappe_ai_assistant.frappe_ai_assistant.imports.studio.guard_data_import",
+    }
+}
 # Includes in <head>
 # ------------------
-
+scheduler_events = {
+    "cron": {
+		# Chikku AI: expire unconfirmed draft actions
+		"*/10 * * * *": [
+			"frappe_ai_assistant.frappe_ai_assistant.jobs.expire_action_requests",
+		],
+	},
+	# Chikku AI: retention clean-up
+	"daily": [
+		"frappe_ai_assistant.frappe_ai_assistant.jobs.purge_retention",
+	],
+	# Chikku AI: opt-in proactive alerts (each evaluated as its subscriber)
+	"hourly": [
+		"frappe_ai_assistant.frappe_ai_assistant.notifications.alerts.run_due_subscriptions",
+	],
+}
 # include js, css files in header of desk.html
 # app_include_css = "/assets/frappe_ai_assistant/css/frappe_ai_assistant.css"
 # app_include_js = "/assets/frappe_ai_assistant/js/frappe_ai_assistant.js"
+
+has_permission = {
+    "Chikku AI Conversation": "frappe_ai_assistant.frappe_ai_assistant.permissions.conversation_has_permission",
+    "Chikku AI Message": "frappe_ai_assistant.frappe_ai_assistant.permissions.message_has_permission",
+    "Chikku AI Action Request": "frappe_ai_assistant.frappe_ai_assistant.permissions.action_request_has_permission",
+    "Chikku AI Job": "frappe_ai_assistant.frappe_ai_assistant.permissions.job_has_permission",
+    "Chikku AI Import Session": "frappe_ai_assistant.frappe_ai_assistant.permissions.import_session_has_permission",
+    "Chikku AI Alert": "frappe_ai_assistant.frappe_ai_assistant.permissions.alert_has_permission",
+    "Chikku AI Knowledge Document": "frappe_ai_assistant.frappe_ai_assistant.permissions.knowledge_has_permission",
+}
+permission_query_conditions = {
+    "Chikku AI Conversation": "frappe_ai_assistant.frappe_ai_assistant.permissions.conversation_query",
+    "Chikku AI Message": "frappe_ai_assistant.frappe_ai_assistant.permissions.message_query",
+    "Chikku AI Action Request": "frappe_ai_assistant.frappe_ai_assistant.permissions.action_request_query",
+    "Chikku AI Job": "frappe_ai_assistant.frappe_ai_assistant.permissions.job_query",
+    "Chikku AI Import Session": "frappe_ai_assistant.frappe_ai_assistant.permissions.import_session_query",
+    "Chikku AI Alert": "frappe_ai_assistant.frappe_ai_assistant.permissions.alert_query",
+    "Chikku AI Knowledge Document": "frappe_ai_assistant.frappe_ai_assistant.permissions.knowledge_query",
+}
+after_migrate = ["frappe_ai_assistant.frappe_ai_assistant.install.after_migrate"]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/frappe_ai_assistant/css/frappe_ai_assistant.css"

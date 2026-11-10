@@ -4,3 +4,5 @@
 
 [post_model_sync]
 # Patches added in this section will be executed after doctypes are migrated
+frappe_ai_assistant.frappe_ai_assistant.patches.enable_r2_modules
+

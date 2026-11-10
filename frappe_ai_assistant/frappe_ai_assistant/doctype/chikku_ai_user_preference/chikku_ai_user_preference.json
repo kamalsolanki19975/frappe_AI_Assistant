@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:user",
+ "creation": "2026-11-04 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "preferred_language",
+  "response_style",
+  "cb_1",
+  "greeting_enabled",
+  "voice_replies",
+  "voice_consent",
+  "voice_consent_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "Auto",
+   "fieldname": "preferred_language",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Preferred Language",
+   "options": "Auto\nEnglish\nHindi\nHinglish",
+   "read_only": 1
+  },
+  {
+   "fieldname": "response_style",
+   "fieldtype": "Select",
+   "label": "Response Style",
+   "options": "\nShort\nBalanced\nDetailed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "greeting_enabled",
+   "fieldtype": "Check",
+   "label": "Greeting Enabled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "voice_replies",
+   "fieldtype": "Check",
+   "label": "Spoken Replies",
+   "read_only": 1
+  },
+  {
+   "fieldname": "voice_consent",
+   "fieldtype": "Check",
+   "label": "Voice Consent Given",
+   "read_only": 1
+  },
+  {
+   "fieldname": "voice_consent_on",
+   "fieldtype": "Datetime",
+   "label": "Voice Consent On",
+   "read_only": 1
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-11-04 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Frappe Ai Assistant",
+ "name": "Chikku AI User Preference",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 0,
+   "export": 0,
+   "if_owner": 1,
+   "permlevel": 0,
+   "print": 0,
+   "read": 1,
+   "report": 0,
+   "role": "Chikku AI User",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 0,
+   "export": 0,
+   "if_owner": 1,
+   "permlevel": 0,
+   "print": 0,
+   "read": 1,
+   "report": 0,
+   "role": "System Manager",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 0,
+   "export": 0,
+   "if_owner": 1,
+   "permlevel": 0,
+   "print": 0,
+   "read": 1,
+   "report": 0,
+   "role": "Chikku AI Manager",
+   "share": 0,
+   "write": 1
+  }
+ ],
+ "read_only": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}
